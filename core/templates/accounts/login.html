@@ -1,92 +1,68 @@
-{% extends "layouts/base-fullscreen.html" %}
+{% extends "layouts/base.html" %}
 
 {% block title %} Login {% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
 
-{% block body_class %} bg-soft {% endblock body_class %}
-
 {% block content %}
 
-    <main>
+        <div class="row">
+          <div class="col-md-8">
+            <div class="card">
 
-        <!-- Section -->
-        <section class="vh-lg-100 d-flex align-items-center">
-            <div class="container">
-                <div class="row justify-content-center form-bg-image" data-background="/static/assets/img/illustrations/signin.svg">
-                    <div class="col-12 d-flex align-items-center justify-content-center">
-                        <div class="signin-inner my-3 my-lg-0 bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
+              <form role="form" method="post" action="">
+              
+                {% csrf_token %} 
 
-                            <div class="text-center text-md-center mb-4 mt-md-0">
-                                <h1 class="mb-0 h3">
-                                    <a target="_blank"
-                                       href="https://appseed.us/admin-dashboards/django-dashboard-volt">Django Volt</a> - Sign IN
-                                </h1>
-                                <br />
-                                <p>
-                                    {% if msg %}
-                                        {{ msg | safe }}
-                                    {% else %}
-                                        Add your credentials
-                                    {% endif %}                                     
-                                </p>    
-                            </div>
+                <div class="card-header">
+                  <h5 class="title">Login</h5>
 
-                            <form method="post" action="" class="mt-4">
-                                
-                                {% csrf_token %} 
-
-                                <!-- Form -->
-                                <div class="form-group mb-4">
-                                    <label for="email">Username</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text" id="basic-addon1"><span class="fas fa-user-circle"></span></span>
-                                        {{ form.username }}
-                                    </div>  
-                                </div>
-                                <!-- End of Form -->
-                                <div class="form-group">
-                                    <!-- Form -->
-                                    <div class="form-group mb-4">
-                                        <label for="password">Your Password</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text" id="basic-addon2"><span class="fas fa-unlock-alt"></span></span>
-                                            {{ form.password }}
-                                        </div>  
-                                    </div>
-                                    <!-- End of Form -->
-
-                                    <div class="d-flex justify-content-between align-items-center mb-4">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck5">
-                                            <label class="form-check-label" for="defaultCheck5">
-                                              Remember me
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <a href="{% url 'register' %}" class="small text-right">Register</a>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <button type="submit" name="login" class="btn btn-block btn-primary">Sign in</button>
-                            </form>
-
-                            <div class="d-flex justify-content-center align-items-center mt-4">
-                                <span class="font-weight-normal">
-                                    &copy; <a  href="https://themesberg.com" target="_blank">Themesberg</a> 
-                                    - coded by <a target="_blank" href="https://appseed.us">AppSeed</a>
-                                </span>
-                            </div>
-
-                        </div>
-                    </div>
+                  <h6 class="card-category">
+                      {% if msg %}
+                        <span class="text-danger">{{ msg }}</span>
+                      {% else %}
+                        Add your credentials
+                      {% endif %}  
+                  </h6>
                 </div>
-            </div>
-        </section>
 
-    </main>
+                <div class="card-body">
+
+                    <div class="row">
+
+                      <div class="col-md-3 px-md-1">
+                        <div class="form-group">
+                          <label>Username</label>
+                          {{ form.username }}
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="row">
+
+                      <div class="col-md-3 px-md-1">
+                        <div class="form-group">
+                          <label>Password</label>
+                          {{ form.password }}
+                        </div>
+                      </div>
+
+                    </div>
+                    
+                </div>
+                <div class="card-footer">
+                  <button type="submit" name="login" class="btn btn-fill btn-primary">Login</button>
+                  &nbsp; &nbsp;
+                  Don't have an account? <a href="{% url 'register' %}" class="text-primary">Create</a>
+                </div>
+
+              </form>
+
+            </div>
+          </div>
+      </div>
+
 
 {% endblock content %}
 

@@ -1,114 +1,97 @@
-{% extends "layouts/base-fullscreen.html" %}
+{% extends "layouts/base.html" %}
 
 {% block title %} Register {% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
 
-{% block body_class %} bg-soft {% endblock body_class %}
-
 {% block content %}
 
-    <main>
+        <div class="row">
+          <div class="col-md-8">
+            <div class="card">
 
-        <!-- Section -->
-        <section class="vh-lg-100 d-flex align-items-center">
-            <div class="container">
-                <div class="row justify-content-center form-bg-image" data-background="/static/assets/img/illustrations/signin.svg">
-                    <div class="col-12 d-flex align-items-center justify-content-center">
-                        <div class="signin-inner my-3 my-lg-0 bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
+              <form role="form" method="post" action="">
+              
+                {% csrf_token %} 
 
-                            <div class="text-center text-md-center mb-4 mt-md-0">
-                                <h1 class="mb-0 h3">
-                                    <a target="_blank"
-                                       href="https://appseed.us/admin-dashboards/django-dashboard-volt">Django Volt</a> - Sign UP
-                                </h1>
-                                <br />
-                                <p>
-                                    {% if msg %}
-                                        {{ msg | safe }}
-                                    {% else %}
-                                        Add your credentials
-                                    {% endif %}                                     
-                                </p>    
-                            </div>
-                            
-                            <form method="post" action="">
-                            
-                                {% csrf_token %}
+                <div class="card-header">
+                  <h5 class="title">Register</h5>
 
-                                <!-- Form -->
-                                <div class="form-group mb-4">
-                                    <label for="email">Username</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text" id="basic-addon3"><span class="fas fa-user-shield"></span></span>
-                                        {{ form.username }}
-                                    </div>
-                                    <span class="text-error">{{ form.username.errors }}</span>
-                                </div>
-                                <!-- End of Form -->
+                  <h6 class="card-category">
+                      {% if msg %}
+                        <span class="text-danger">{{ msg | safe }}</span>
+                      {% else %}
+                        Add your credentials
+                      {% endif %}  
+                  </h6>
+                </div>
 
-                                <!-- Form -->
-                                <div class="form-group mb-4">
-                                    <label for="email">Your Email</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text" id="basic-addon3"><span class="fas fa-envelope"></span></span>
-                                        {{ form.email }}
-                                    </div>
-                                    <span class="text-error">{{ form.email.errors }}</span>
-                                </div>
-                                <!-- End of Form -->
+              {% if success %}
 
-                                <div class="form-group">
+                <p>
+                  Please <a href={% url 'login' %}>authenticate</a> using the new account.
+                </p>  
 
-                                    <!-- Form -->
-                                    <div class="form-group mb-4">
-                                        <label for="password">Password</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text" id="basic-addon4"><span class="fas fa-unlock-alt"></span></span>
-                                            {{ form.password1 }}
-                                        </div>  
-                                        <span class="text-error">{{ form.password1.errors }}</span>
-                                    </div>
-                                    <!-- End of Form -->
+              {% else %}
 
-                                    <!-- Form -->
-                                    <div class="form-group mb-4">
-                                        <label for="password">Password Check</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text" id="basic-addon4"><span class="fas fa-unlock-alt"></span></span>
-                                            {{ form.password2 }}
-                                        </div>  
-                                        <span class="text-error">{{ form.password2.errors }}</span>
-                                    </div>
+                <div class="card-body">
 
-                                    <div class="d-flex justify-content-between align-items-center mb-4">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck5">
-                                            <label class="form-check-label" for="defaultCheck5">
-                                              Agree terms
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <a href="{% url 'login' %}" class="small text-right">Login</a>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-                                <button type="submit" name="register" class="btn btn-block btn-primary">Sign in</button>
-                            </form>
-                            <div class="d-flex justify-content-center align-items-center mt-4">
-                                <span class="font-weight-normal">
-                                    &copy; <a  href="https://themesberg.com" target="_blank">Themesberg</a> 
-                                    - coded by <a target="_blank" href="https://appseed.us">AppSeed</a>
-                                </span>
+                    <div class="row">
+                      <div class="col-md-3 px-md-1">
+                        <div class="form-group">
+                          <label>Username</label>
+                          {{ form.username }}
+                        </div>
+                      </div>
+                    </div>
+                    <span class="text-danger">{{ form.username.errors }}</span>
+
+                    <div class="row">
+                      <div class="col-md-3 px-md-1">
+                        <div class="form-group">
+                          <label>Email</label>
+                          {{ form.email }}
+                        </div>
+                      </div>
+                    </div>
+                    <span class="text-danger">{{ form.email.errors }}</span>
+
+                    <div class="row">
+                      <div class="col-md-3 px-md-1">
+                        <div class="form-group">
+                          <label>Password</label>
+                          {{ form.password1 }}
+                        </div>
+                      </div>
+                    </div>
+                    <span class="text-danger">{{ form.password1.errors }}</span>
+                    
+                    <div class="row">
+                        <div class="col-md-3 px-md-1">
+                            <div class="form-group">
+                            <label>Password Check</label>
+                            {{ form.password2 }}
                             </div>
                         </div>
                     </div>
+                    <span class="text-danger">{{ form.password2.errors }}</span>
+
                 </div>
+                <div class="card-footer">
+                  <button type="submit" name="register" class="btn btn-fill btn-primary">Register</button>
+                  &nbsp; &nbsp;
+                  Have an account? <a href="{% url 'login' %}" class="text-primary">Login</a>
+                </div>
+
+              {% endif %} 
+
+              </form>
+
             </div>
-        </section>
-    </main>
+          </div>
+      </div>
+
 
 {% endblock content %}
 

@@ -1,28 +1,26 @@
-{% extends "layouts/base-fullscreen.html" %}
+{% extends "layouts/base.html" %}
 
-{% block title %} 500 Error {% endblock %} 
+{% block title %} Page 404 {% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
 
-    <main>
-        <section class="vh-100 d-flex align-items-center justify-content-center">
-            <div class="container">
-                <div class="row align-items-center ">
-                    <div class="col-12 col-lg-5 order-2 order-lg-1 text-center text-lg-left">
-                        <h1 class="mt-5">Something has gone <span class="text-primary">seriously</span> wrong</h1>
-                        <p class="lead my-4">It's always time for a coffee break. We should be back by the time you finish your coffee.</p>
-                        <a class="btn btn-primary animate-hover" href="/"><i class="fas fa-chevron-left mr-3 pl-2 animate-left-3"></i>Go back home</a>
-                    </div>
-                    <div class="col-12 col-lg-7 order-1 order-lg-2 text-center d-flex align-items-center justify-content-center">
-                        <img class="img-fluid w-75" src="/static/assets/img/illustrations/500.svg" alt="500 Server Error">
-                    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-profile">
+                <div class="card-body">
+                    <h6 class="card-category text-gray">Error 500</h6>
+                    <h4 class="card-title">
+                        Internal Server Error
+                    </h4>
+                    <a href="/" class="btn btn-primary btn-round">Home</a>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </div>
+
 
 {% endblock content %}
 
