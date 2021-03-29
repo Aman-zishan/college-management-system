@@ -2073,6 +2073,7 @@ pre code {
 }
 
 .form-control {
+
   display: block;
   width: 100%;
   height: calc(2.25rem + 2px);
@@ -2198,6 +2199,11 @@ textarea.form-control {
 
 .form-group {
   margin-bottom: 1rem;
+
+}
+.form-group ul {
+  list-style: none;
+
 }
 
 .form-text {
@@ -2206,6 +2212,7 @@ textarea.form-control {
 }
 
 .form-row {
+  list-style: none;
   display: flex;
   flex-wrap: wrap;
   margin-right: -5px;

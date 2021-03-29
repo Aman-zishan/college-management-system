@@ -8,15 +8,19 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.template import loader
 from django.http import HttpResponse
 from django import template
+from authentication.models import User
 
 @login_required(login_url="/login/")
 def index(request):
     
     context = {}
     context['segment'] = 'index'
-
-    html_template = loader.get_template( 'index.html' )
-    return HttpResponse(html_template.render(context, request))
+    if request.user.is_teacher:
+        html_template = loader.get_template( 'index.html' )
+        return HttpResponse(html_template.render(context, request))
+    else:
+        html_template = loader.get_template( 'ui-tables.html')
+        return HttpResponse(html_template.render(context, request))
 
 @login_required(login_url="/login/")
 def pages(request):

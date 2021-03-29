@@ -8,10 +8,12 @@ from django.shortcuts import render
 # Create your views here.
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.models import User
 from django.forms.utils import ErrorList
 from django.http import HttpResponse
 from .forms import LoginForm, SignUpForm
+from .models import User, Student, Teacher
+
+
 
 def login_view(request):
     form = LoginForm(request.POST or None)
@@ -26,6 +28,17 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
+                mode = form.cleaned_data.get("mode")
+                if mode == "Student":
+                    request.user.is_student = True
+                    request.user.save()
+                    print("ok")
+
+                else:
+                    request.user.is_teacher = True
+                    request.user.save()
+                    print("teacher ok")
+                request.user.save()
                 return redirect("/")
             else:    
                 msg = 'Invalid credentials'    
@@ -34,23 +47,31 @@ def login_view(request):
 
     return render(request, "accounts/login.html", {"form": form, "msg" : msg})
 
+
 def register_user(request):
 
-    msg     = None
+    msg = None
     success = False
+
 
     if request.method == "POST":
         form = SignUpForm(request.POST)
+
         if form.is_valid():
-            form.save()
+            mode = form.cleaned_data.get("mode")
             username = form.cleaned_data.get("username")
             raw_password = form.cleaned_data.get("password1")
-            user = authenticate(username=username, password=raw_password)
+            user = authenticate(username=username, password=raw_password,)
+            #debug
+            print(mode)
+            form.save()
 
-            msg     = 'User created - please <a href="/login">login</a>.'
+
+
+            msg = 'User created - please <a href="/login">login</a>.'
             success = True
             
-            #return redirect("/login/")
+            # return redirect("/login/")
 
         else:
             msg = 'Form is not valid'    
