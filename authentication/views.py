@@ -28,16 +28,19 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                mode = form.cleaned_data.get("mode")
-                if mode == "Student":
+                mode = request.session.get('selected_mode')
+                if mode == "Student" and request.user.is_student == False:
                     request.user.is_student = True
                     request.user.save()
-                    print("ok")
+                    print("student ok")
 
-                else:
+                elif mode == "Teacher" and request.user.is_teacher == False:
                     request.user.is_teacher = True
                     request.user.save()
                     print("teacher ok")
+
+                else:
+                    print("hemme ommbi")
                 request.user.save()
                 return redirect("/")
             else:    
@@ -61,8 +64,12 @@ def register_user(request):
             mode = form.cleaned_data.get("mode")
             username = form.cleaned_data.get("username")
             raw_password = form.cleaned_data.get("password1")
+            selected_mode = form.cleaned_data["mode"]
+            request.session['selected_mode'] = selected_mode
             user = authenticate(username=username, password=raw_password,)
             #debug
+            print("reigster model")
+            print(selected_mode)
             print(mode)
             form.save()
 
