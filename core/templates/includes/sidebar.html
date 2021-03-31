@@ -30,12 +30,14 @@
               <p>Maps</p>
             </a>
           </li>
+            {% if request.user.is_teacher %}
           <li class="{% if 'notifications' in segment %} active {% endif %}">
-            <a href="/ui-notifications.html">
+            <a href="{% url 'add_notification' %}">
               <i class="tim-icons icon-bell-55"></i>
               <p>Notifications</p>
             </a>
           </li>
+                {% endif %}
           <li class="{% if 'page-user' in segment %} active {% endif %}">
             <a href="/page-user.html">
               <i class="tim-icons icon-single-02"></i>

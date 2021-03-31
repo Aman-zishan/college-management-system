@@ -9,17 +9,19 @@ from django.template import loader
 from django.http import HttpResponse
 from django import template
 from authentication.models import User
+from .forms import UploadNotificationForm
 
 @login_required(login_url="/login/")
 def index(request):
-    
-    context = {}
-    context['segment'] = 'index'
+    students = User.objects.filter(is_student=True)
+
+    context = {'students': students, 'segment': 'index'}
+
     if request.user.is_teacher:
-        html_template = loader.get_template( 'index.html' )
+        html_template = loader.get_template( 'teacher/dashboard.html')
         return HttpResponse(html_template.render(context, request))
     else:
-        html_template = loader.get_template( 'ui-tables.html')
+        html_template = loader.get_template( 'student/dashboard.html')
         return HttpResponse(html_template.render(context, request))
 
 @login_required(login_url="/login/")
@@ -44,3 +46,17 @@ def pages(request):
     
         html_template = loader.get_template( 'page-500.html' )
         return HttpResponse(html_template.render(context, request))
+
+
+@login_required(login_url="/login/")
+def UploadNotification(request):
+    if request.method == 'POST':
+        form = UploadNotificationForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = UploadNotificationForm()
+    return render(request, 'teacher/add_notification.html', {
+        'form': form
+    })

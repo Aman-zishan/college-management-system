@@ -7,11 +7,11 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.forms.utils import ErrorList
 from django.http import HttpResponse
 from .forms import LoginForm, SignUpForm
-from .models import User, Student, Teacher
+
 
 
 
@@ -29,18 +29,6 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 mode = request.session.get('selected_mode')
-                if mode == "Student" and request.user.is_student == False:
-                    request.user.is_student = True
-                    request.user.save()
-                    print("student ok")
-
-                elif mode == "Teacher" and request.user.is_teacher == False:
-                    request.user.is_teacher = True
-                    request.user.save()
-                    print("teacher ok")
-
-                else:
-                    print("hemme ommbi")
                 request.user.save()
                 return redirect("/")
             else:    
@@ -59,19 +47,35 @@ def register_user(request):
 
     if request.method == "POST":
         form = SignUpForm(request.POST)
-
+        print(form.errors)
         if form.is_valid():
             mode = form.cleaned_data.get("mode")
             username = form.cleaned_data.get("username")
             raw_password = form.cleaned_data.get("password1")
-            selected_mode = form.cleaned_data["mode"]
-            request.session['selected_mode'] = selected_mode
-            user = authenticate(username=username, password=raw_password,)
-            #debug
-            print("reigster model")
-            print(selected_mode)
+            # selected_mode = form.cleaned_data["mode"]
+            # request.session['selected_mode'] = selected_mode
+            # user = authenticate(username=username, password=raw_password,)
+            user = form.save()
             print(mode)
-            form.save()
+            login(request, user)
+            if mode == "Student" and request.user.is_student == False:
+                request.user.is_student = True
+                request.user.save()
+                print("student ok")
+
+            elif mode == "Teacher" and request.user.is_teacher == False:
+                request.user.is_teacher = True
+                request.user.save()
+                print("teacher ok")
+
+            else:
+                print("Error on assigning roles")
+
+            #debug
+            print("register model")
+            print(mode)
+            logout(request)
+
 
 
 
