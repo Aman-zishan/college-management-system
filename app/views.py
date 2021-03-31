@@ -10,6 +10,7 @@ from django.http import HttpResponse
 from django import template
 from authentication.models import User
 from .forms import UploadNotificationForm
+from .models import Notification
 
 @login_required(login_url="/login/")
 def index(request):
@@ -50,13 +51,28 @@ def pages(request):
 
 @login_required(login_url="/login/")
 def UploadNotification(request):
+    success = False
+    notification = Notification.objects.all()
+
+
+    msg = "error while uploading Notice!"
     if request.method == 'POST':
         form = UploadNotificationForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('home')
+            form = UploadNotificationForm()
+            return render(request, 'teacher/add_notification.html', {
+                'form': form,
+                'notif': notification,
+            })
     else:
         form = UploadNotificationForm()
     return render(request, 'teacher/add_notification.html', {
-        'form': form
+        'form': form,
+        'msg': msg,
+        'notif': notification
     })
+
+
+
+

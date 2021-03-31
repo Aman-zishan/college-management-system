@@ -13,8 +13,6 @@ from django.http import HttpResponse
 from .forms import LoginForm, SignUpForm
 
 
-
-
 def login_view(request):
     form = LoginForm(request.POST or None)
 
@@ -43,7 +41,6 @@ def register_user(request):
 
     msg = None
     success = False
-
 
     if request.method == "POST":
         form = SignUpForm(request.POST)
@@ -75,10 +72,6 @@ def register_user(request):
             print("register model")
             print(mode)
             logout(request)
-
-
-
-
             msg = 'User created - please <a href="/login">login</a>.'
             success = True
             
