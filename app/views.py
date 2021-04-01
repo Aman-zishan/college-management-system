@@ -8,10 +8,11 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.template import loader
 from django.http import HttpResponse
 from django import template
+from .decorators import teacher_required
 from authentication.models import User
 from .forms import UploadNotificationForm
 from .models import Notification
-
+from django.views.generic import ListView
 
 @login_required(login_url="/login/")
 def index(request):
@@ -53,6 +54,7 @@ def pages(request):
 
 
 @login_required(login_url="/login/")
+@teacher_required
 def UploadNotification(request):
     success = False
     notification = Notification.objects.all()

@@ -19028,6 +19028,7 @@ code {
 .form-group {
   margin-bottom: 10px;
   position: relative;
+  padding-left: 10px;
 }
 
 .input-group .form-control-static,
