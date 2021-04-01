@@ -5939,13 +5939,13 @@ a.badge-darker.focus {
 }
 
 .alert-default {
-  color: #344675;
-  background-color: #54648b;
-  border-color: #54648b;
+  color: #cb52e3;
+  background-color: #cb52e3;
+  border-color: #cb52e3;
 }
 
 .alert-default hr {
-  border-top-color: #4a597b;
+  border-top-color: #cb52e3;
 }
 
 .alert-default .alert-link {

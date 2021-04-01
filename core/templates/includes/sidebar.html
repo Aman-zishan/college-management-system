@@ -37,6 +37,13 @@
               <p>Notifications</p>
             </a>
           </li>
+                {% elif request.user.is_student %}
+                  <li class="{% if 'notifications' in segment %} active {% endif %}">
+            <a href="{% url 'view_notification' %}">
+              <i class="tim-icons icon-bell-55"></i>
+              <p>Notifications</p>
+            </a>
+          </li>
                 {% endif %}
           <li class="{% if 'page-user' in segment %} active {% endif %}">
             <a href="/page-user.html">

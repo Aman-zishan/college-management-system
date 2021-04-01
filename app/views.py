@@ -12,6 +12,7 @@ from authentication.models import User
 from .forms import UploadNotificationForm
 from .models import Notification
 
+
 @login_required(login_url="/login/")
 def index(request):
     students = User.objects.filter(is_student=True)
@@ -25,6 +26,7 @@ def index(request):
         html_template = loader.get_template( 'student/dashboard.html')
         return HttpResponse(html_template.render(context, request))
 
+'''
 @login_required(login_url="/login/")
 def pages(request):
     context = {}
@@ -47,6 +49,7 @@ def pages(request):
     
         html_template = loader.get_template( 'page-500.html' )
         return HttpResponse(html_template.render(context, request))
+'''
 
 
 @login_required(login_url="/login/")
@@ -72,6 +75,18 @@ def UploadNotification(request):
         'msg': msg,
         'notif': notification
     })
+
+
+@login_required(login_url="/login/")
+def ViewNotification(request):
+    success = False
+    notification = Notification.objects.all()
+
+    return render(request, 'student/view_notifications.html', {
+
+                'notif': notification,
+            })
+
 
 
 

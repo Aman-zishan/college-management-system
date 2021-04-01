@@ -29,6 +29,15 @@ class LoginForm(forms.Form):
                 "class": "form-control"
             }
         ))
+    # prevents students from creating fake teacher accounts to access/alter the DB ;)
+    staff_code = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "cusat staff code",
+                "class": "form-control",
+
+            }
+        ),required=False)
 
 
 class SignUpForm(UserCreationForm):

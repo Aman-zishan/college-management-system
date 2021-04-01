@@ -13,10 +13,8 @@ class UploadNotificationForm(forms.ModelForm):
         ))
     notification = forms.FileField(
         widget=forms.FileInput(
-            attrs={
-                "placeholder": "Choose file",
-                "class": "form-control"
-            }
+            attrs={'accept':'application/pdf',
+                   'class':'form-control'}
         ))
 
     class Meta:

@@ -15,7 +15,7 @@ from .forms import LoginForm, SignUpForm
 
 def login_view(request):
     form = LoginForm(request.POST or None)
-
+    code = "staff@soecusat"
     msg = None
 
     if request.method == "POST":
@@ -26,7 +26,21 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                mode = request.session.get('selected_mode')
+                if request.user.is_teacher:
+                    staff_code = form.cleaned_data.get("staff_code")
+                    print(staff_code)
+                    if code == staff_code:
+                        login(request, user)
+                        return redirect("/")
+                    elif staff_code == "":
+                        msg = "Please enter the staff code!"
+                        return render(request, "accounts/login.html", {"form": form, "msg" : msg})
+                    else:
+                        msg = "Wrong staff code!"
+                        return render(request, "accounts/login.html", {"form": form, "msg" : msg})
+                else:
+                    pass
+                login(request, user)
                 request.user.save()
                 return redirect("/")
             else:    

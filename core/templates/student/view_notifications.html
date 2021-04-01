@@ -7,28 +7,11 @@
 
 {% block content %}
 <div class="row">
-  <div class="col-md-7">
-    <div style="padding: 50px" class="card">
-  <form  id="upload-form" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-      {{ form.as_p }}
 
-
-      <span class="text-danger">Upload pdf format files</span>
-
-
-      <div id="progress-box" class="not-visible"></div>
-
-<br>
-
-    <button id="submit-btn" class="btn btn-primary" type="submit">Upload</button>
-  </form>
-    </div>
-    </div>
 <div class="col-md-7">
     <div class="card">
       <div class="card-header">
-        <h4 class="card-title">Previous Notices</h4>
+        <h4 class="card-title">Notices</h4>
       </div>
       <div class="card-body">
 
@@ -44,7 +27,7 @@
           <span data-notify="icon" class="tim-icons icon-bell-55"></span>
       <span style="font-size: 15px;" data-notify="message">{{notice.title}}</span>
             <a href="{{notice.notification.url}}"><button id="submit-btn" class="btn btn-outline-secondary" type="submit">view</button></a>
-            <button id="submit-btn" class="btn btn-danger" type="submit">delete</button>
+
 
         </div>
 
