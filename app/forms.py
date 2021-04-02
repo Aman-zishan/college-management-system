@@ -58,7 +58,7 @@ class AddSubjectNotesForm(forms.ModelForm):
         empty_label="Choose subject"
     )
 
-    notes = forms.FileField(
+    note = forms.FileField(
         widget=forms.FileInput(
             attrs={
                    'class': 'form-control'}
@@ -66,4 +66,4 @@ class AddSubjectNotesForm(forms.ModelForm):
 
     class Meta:
         model = Notes
-        fields = ('title', 'subject', 'notes')
+        fields = ('title', 'subject', 'note')

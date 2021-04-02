@@ -117,19 +117,12 @@ def AddNotes(request):
     msg = ""
     color = "text-danger"
     if request.method == 'POST':
-        form = AddSubjectForm(request.POST, request.FILES)
+        form = AddSubjectNotesForm(request.POST, request.FILES)
         print(form.errors)
         print(request.POST.get("subject"))
 
         if form.is_valid():
 
-            title = form.cleaned_data.get("title")
-            print(title)
-            note = form.cleaned_data.get("note")
-            subject_id = request.POST.get("subject")
-            note = Notes(title=title, note=note, subject=subject_id)
-
-            note.save()
             form.save()
             form = AddSubjectNotesForm()
             msg = "Successfully added subject notes!"
