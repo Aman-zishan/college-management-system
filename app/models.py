@@ -3,7 +3,10 @@ from authentication.models import User
 
 
 class Subject(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
 
 
 class Student(models.Model):
@@ -42,6 +45,9 @@ class QuestionPaper(models.Model):
 class Notification(models.Model):
     title = models.CharField(max_length=500)
     notification = models.FileField(upload_to='notification/')
+
+    def __str__(self):
+        return self.title
 
 
 class Assignment(models.Model):

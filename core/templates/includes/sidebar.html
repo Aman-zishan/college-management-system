@@ -18,12 +18,21 @@
               <p>Dashboard</p>
             </a>
           </li>
-          <li class="{% if 'icons' in segment %} active {% endif %}">
-            <a href="/ui-icons.html">
-              <i class="tim-icons icon-atom"></i>
-              <p>Icons</p>
+           {% if request.user.is_teacher %}
+          <li class="{% if 'notifications' in segment %} active {% endif %}">
+            <a href="{% url 'add_subject' %}">
+              <i class="tim-icons icon-bell-55"></i>
+              <p>Subjects</p>
             </a>
           </li>
+
+                  <li class="{% if 'notifications' in segment %} active {% endif %}">
+            <a href="{% url 'add_note' %}">
+              <i class="tim-icons icon-bell-55"></i>
+              <p>Notes</p>
+            </a>
+          </li>
+                {% endif %}
           <li class="{% if 'maps' in segment %} active {% endif %}">
             <a href="/ui-maps.html">
               <i class="tim-icons icon-pin"></i>
@@ -78,7 +87,7 @@
           {% else %}
           <li class="active">
             <a target="_blank" 
-               href="https://appseed.us/admin-dashboards/django-dashboard-black-pro">
+               href="#">
               <i class="tim-icons icon-spaceship"></i>
               <p>Login</p>
             </a>

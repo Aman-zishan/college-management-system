@@ -290,6 +290,13 @@ select {
 
 select {
   word-wrap: normal;
+  background-color:  #e14eca;
+}
+
+select option {
+  word-wrap: normal;
+
+  color: #1b1e21;
 }
 
 button,
@@ -2122,7 +2129,7 @@ pre code {
 
 select.form-control:focus::-ms-value {
   color: rgba(255, 255, 255, 0.8);
-  background-color: transparent;
+
 }
 
 .form-control-file,

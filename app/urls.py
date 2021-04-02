@@ -13,7 +13,9 @@ urlpatterns = [
     # The home page
     path('', views.index, name='home'),
     path(r'add_notification', views.UploadNotification, name='add_notification'),
-path(r'view_notification', views.ViewNotification, name='view_notification'),
+    path(r'view_notification', views.ViewNotification, name='view_notification'),
+    path(r'add_subject', views.AddSubject, name='add_subject'),
+    path(r'add_note', views.AddNotes, name='add_note'),
 
     # Matches any html file
    #re_path(r'^.*\.*', views.pages, name='pages'),

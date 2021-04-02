@@ -16,35 +16,36 @@
     {% csrf_token %}
       {{ form.as_p }}
 
-    <button id="submit-btn" class="btn btn-primary" type="submit">Add Subject</button>
+    <button id="submit-btn" class="btn btn-primary" type="submit">Upload Notes</button>
   </form>
 
     </div>
     </div>
+{% comment %}
  <div class="col-md-7">
     <div class="card">
       <div class="card-header">
-        <h4 class="card-title">Subjects</h4>
+        <h4 class="card-title">Notes</h4>
       </div>
       <div class="card-body">
 
-        {% for sub in subjects %}
+
         <div class="alert alert-default alert-with-icon" data-notify="container">
           <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
             <i class="tim-icons icon-simple-remove"></i>
           </button>
 
           <span data-notify="icon" class="tim-icons icon-bell-55"></span>
-      <span style="font-size: 15px;" data-notify="message">{{sub.name}}</span>
+      <span style="font-size: 15px;" data-notify="message"></span>
 
 
         </div>
 
 
+{% endcomment %}
 
 
 
-          {% endfor %}
       </div>
     </div>
   </div>

@@ -10,8 +10,9 @@ from django.http import HttpResponse
 from django import template
 from .decorators import teacher_required
 from authentication.models import User
-from .forms import UploadNotificationForm
-from .models import Notification
+from .forms import UploadNotificationForm, AddSubjectForm, AddSubjectNotesForm
+from .models import Notification, Subject, Notes
+
 from django.views.generic import ListView
 
 @login_required(login_url="/login/")
@@ -76,6 +77,75 @@ def UploadNotification(request):
         'form': form,
         'msg': msg,
         'notif': notification
+    })
+
+
+@login_required(login_url="/login/")
+@teacher_required
+def AddSubject(request):
+
+    subject = Subject.objects.all()
+    msg = ""
+    color = "text-danger"
+    if request.method == 'POST':
+        form = AddSubjectForm(request.POST)
+        if form.is_valid():
+            form.save()
+            msg = "Successfully added subject!"
+            color = "text-success"
+            form = AddSubjectForm()
+            return render(request, 'teacher/add_subject.html', {
+                'form': form,
+                'subjects': subject,
+                'msg': msg,
+                'color': color
+            })
+    else:
+
+        form = AddSubjectForm()
+    return render(request, 'teacher/add_subject.html', {
+        'form': form,
+        'msg': msg,
+        'color': color,
+    })
+
+@login_required(login_url="/login/")
+@teacher_required
+def AddNotes(request):
+
+    notes = Notes.objects.all()
+    msg = ""
+    color = "text-danger"
+    if request.method == 'POST':
+        form = AddSubjectForm(request.POST, request.FILES)
+        print(form.errors)
+        print(request.POST.get("subject"))
+
+        if form.is_valid():
+
+            title = form.cleaned_data.get("title")
+            print(title)
+            note = form.cleaned_data.get("note")
+            subject_id = request.POST.get("subject")
+            note = Notes(title=title, note=note, subject=subject_id)
+
+            note.save()
+            form.save()
+            form = AddSubjectNotesForm()
+            msg = "Successfully added subject notes!"
+            color = "text-success"
+            return render(request, 'teacher/add_notes.html', {
+                'form': form,
+                'msg': msg,
+                'color': color
+            })
+    else:
+
+        form = AddSubjectNotesForm()
+    return render(request, 'teacher/add_notes.html', {
+        'form': form,
+        'msg': msg,
+        'color': color,
     })
 
 
