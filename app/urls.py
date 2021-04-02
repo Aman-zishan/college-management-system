@@ -16,6 +16,7 @@ urlpatterns = [
     path(r'view_notification', views.ViewNotification, name='view_notification'),
     path(r'add_subject', views.AddSubject, name='add_subject'),
     path(r'add_note', views.AddNotes, name='add_note'),
+    path(r'add_qp', views.AddQp, name='add_qp'),
 
     # Matches any html file
    #re_path(r'^.*\.*', views.pages, name='pages'),

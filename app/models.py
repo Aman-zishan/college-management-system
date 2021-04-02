@@ -36,6 +36,7 @@ class Notes(models.Model):
 class QuestionPaper(models.Model):
     title = models.CharField(max_length=300)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='subject_qp')
+    year = models.IntegerField(default=2019)
     qp = models.FileField(upload_to='questionpapers/')
 
     def __str__(self):

@@ -19,33 +19,39 @@
             </a>
           </li>
            {% if request.user.is_teacher %}
+               <li class="{% if 'notifications' in segment %} active {% endif %}">
+            <a href="{% url 'add_notification' %}">
+              <i class="tim-icons icon-bell-55"></i>
+              <p>Notifications</p>
+            </a>
+          </li>
           <li class="{% if 'notifications' in segment %} active {% endif %}">
             <a href="{% url 'add_subject' %}">
-              <i class="tim-icons icon-bell-55"></i>
+              <i class="tim-icons icon-book-bookmark"></i>
               <p>Subjects</p>
             </a>
           </li>
 
                   <li class="{% if 'notifications' in segment %} active {% endif %}">
             <a href="{% url 'add_note' %}">
-              <i class="tim-icons icon-bell-55"></i>
+              <i class="tim-icons icon-paper"></i>
               <p>Notes</p>
             </a>
           </li>
-                {% endif %}
-          <li class="{% if 'maps' in segment %} active {% endif %}">
-            <a href="/ui-maps.html">
-              <i class="tim-icons icon-pin"></i>
-              <p>Maps</p>
+               <li class="{% if 'maps' in segment %} active {% endif %}">
+            <a href="{% url 'add_qp' %}">
+              <i class="tim-icons icon-paper"></i>
+              <p>Question papers</p>
             </a>
           </li>
-            {% if request.user.is_teacher %}
-          <li class="{% if 'notifications' in segment %} active {% endif %}">
-            <a href="{% url 'add_notification' %}">
-              <i class="tim-icons icon-bell-55"></i>
-              <p>Notifications</p>
+               <li class="{% if 'maps' in segment %} active {% endif %}">
+            <a href="#">
+              <i class="tim-icons icon-paper"></i>
+              <p>Assignments</p>
             </a>
           </li>
+
+
                 {% elif request.user.is_student %}
                   <li class="{% if 'notifications' in segment %} active {% endif %}">
             <a href="{% url 'view_notification' %}">

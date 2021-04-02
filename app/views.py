@@ -10,7 +10,7 @@ from django.http import HttpResponse
 from django import template
 from .decorators import teacher_required
 from authentication.models import User
-from .forms import UploadNotificationForm, AddSubjectForm, AddSubjectNotesForm
+from .forms import UploadNotificationForm, AddSubjectForm, AddSubjectNotesForm, AddSubjectQpForm
 from .models import Notification, Subject, Notes
 
 from django.views.generic import ListView
@@ -29,6 +29,7 @@ def index(request):
         return HttpResponse(html_template.render(context, request))
 
 '''
+
 @login_required(login_url="/login/")
 def pages(request):
     context = {}
@@ -153,6 +154,37 @@ def ViewNotification(request):
             })
 
 
+@login_required(login_url="/login/")
+@teacher_required
+def AddQp(request):
+
+    notes = Notes.objects.all()
+    msg = ""
+    color = "text-danger"
+    if request.method == 'POST':
+        form = AddSubjectQpForm(request.POST, request.FILES)
+        print(form.errors)
+        print(request.POST.get("subject"))
+
+        if form.is_valid():
+
+            form.save()
+            form = AddSubjectQpForm()
+            msg = "Successfully added subject question paper!"
+            color = "text-success"
+            return render(request, 'teacher/add_questionpaper.html', {
+                'form': form,
+                'msg': msg,
+                'color': color
+            })
+    else:
+
+        form = AddSubjectQpForm()
+    return render(request, 'teacher/add_questionpaper.html', {
+        'form': form,
+        'msg': msg,
+        'color': color,
+    })
 
 
 
