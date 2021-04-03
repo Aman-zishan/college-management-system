@@ -44,7 +44,7 @@ def login_view(request):
                 request.user.save()
                 return redirect("/")
             else:    
-                msg = 'Invalid credentials'    
+                msg = 'Invalid Credentials'
         else:
             msg = 'Error validating the form'    
 
