@@ -1,5 +1,5 @@
 from django import forms
-from .models import Notification, Subject, Notes, QuestionPaper
+from .models import Notification, Subject, Notes, QuestionPaper, Assignment
 
 
 class UploadNotificationForm(forms.ModelForm):
@@ -68,6 +68,37 @@ class AddSubjectNotesForm(forms.ModelForm):
         model = Notes
         fields = ('title', 'subject', 'note')
 
+
+class AddSubjectAssignmentForm(forms.ModelForm):
+
+    title = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "assignment Title",
+                "class": "form-control"
+            }
+        ))
+    subject = forms.ModelChoiceField(
+
+        widget=forms.Select(
+            attrs={
+
+                "class": "form-control"
+            }
+        ),
+        queryset=Subject.objects.all(),
+        empty_label="Choose subject"
+    )
+
+    assignment = forms.FileField(
+        widget=forms.FileInput(
+            attrs={
+                   'class': 'form-control'}
+        ))
+
+    class Meta:
+        model = Assignment
+        fields = ('title', 'subject', 'assignment')
 
 class AddSubjectQpForm(forms.ModelForm):
 

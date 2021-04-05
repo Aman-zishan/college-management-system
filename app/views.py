@@ -10,7 +10,7 @@ from django.http import HttpResponse
 from django import template
 from .decorators import teacher_required
 from authentication.models import User
-from .forms import UploadNotificationForm, AddSubjectForm, AddSubjectNotesForm, AddSubjectQpForm
+from .forms import UploadNotificationForm, AddSubjectForm, AddSubjectNotesForm, AddSubjectQpForm, AddSubjectAssignmentForm
 from .models import Notification, Subject, Notes
 
 from django.views.generic import ListView
@@ -18,8 +18,9 @@ from django.views.generic import ListView
 @login_required(login_url="/login/")
 def index(request):
     students = User.objects.filter(is_student=True)
+    subjects = Subject.objects.all()
 
-    context = {'students': students, 'segment': 'index'}
+    context = {'students': students, 'segment': 'index', 'subjects': subjects}
 
     if request.user.is_teacher:
         html_template = loader.get_template( 'teacher/dashboard.html')
@@ -58,26 +59,29 @@ def pages(request):
 @login_required(login_url="/login/")
 @teacher_required
 def UploadNotification(request):
-    success = False
-    notification = Notification.objects.all()
+    msg = ""
+    color = "text-danger"
 
-
-    msg = "error while uploading Notice!"
     if request.method == 'POST':
         form = UploadNotificationForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            msg = "Successfully added subject!"
+            color = "text-success"
             form = UploadNotificationForm()
-            return render(request, 'teacher/add_notification.html', {
+            return render(request, 'teacher/add_item.html', {
+                'msg': msg,
                 'form': form,
-                'notif': notification,
+                'color': color
+
+
             })
     else:
         form = UploadNotificationForm()
-    return render(request, 'teacher/add_notification.html', {
+    return render(request, 'teacher/add_item.html', {
         'form': form,
         'msg': msg,
-        'notif': notification
+
     })
 
 
@@ -85,7 +89,7 @@ def UploadNotification(request):
 @teacher_required
 def AddSubject(request):
 
-    subject = Subject.objects.all()
+
     msg = ""
     color = "text-danger"
     if request.method == 'POST':
@@ -95,16 +99,16 @@ def AddSubject(request):
             msg = "Successfully added subject!"
             color = "text-success"
             form = AddSubjectForm()
-            return render(request, 'teacher/add_subject.html', {
+            return render(request, 'teacher/add_item.html', {
                 'form': form,
-                'subjects': subject,
+
                 'msg': msg,
                 'color': color
             })
     else:
 
         form = AddSubjectForm()
-    return render(request, 'teacher/add_subject.html', {
+    return render(request, 'teacher/add_item.html', {
         'form': form,
         'msg': msg,
         'color': color,
@@ -114,7 +118,7 @@ def AddSubject(request):
 @teacher_required
 def AddNotes(request):
 
-    notes = Notes.objects.all()
+
     msg = ""
     color = "text-danger"
     if request.method == 'POST':
@@ -128,7 +132,7 @@ def AddNotes(request):
             form = AddSubjectNotesForm()
             msg = "Successfully added subject notes!"
             color = "text-success"
-            return render(request, 'teacher/add_notes.html', {
+            return render(request, 'teacher/add_item.html', {
                 'form': form,
                 'msg': msg,
                 'color': color
@@ -136,7 +140,39 @@ def AddNotes(request):
     else:
 
         form = AddSubjectNotesForm()
-    return render(request, 'teacher/add_notes.html', {
+    return render(request, 'teacher/add_item.html', {
+        'form': form,
+        'msg': msg,
+        'color': color,
+    })
+
+
+@login_required(login_url="/login/")
+@teacher_required
+def AddAssignment(request):
+
+    msg = ""
+    color = "text-danger"
+    if request.method == 'POST':
+        form = AddSubjectAssignmentForm(request.POST, request.FILES)
+        print(form.errors)
+        print(request.POST.get("subject"))
+
+        if form.is_valid():
+
+            form.save()
+            form = AddSubjectAssignmentForm()
+            msg = "Successfully added Assignment!"
+            color = "text-success"
+            return render(request, 'teacher/add_item.html', {
+                'form': form,
+                'msg': msg,
+                'color': color
+            })
+    else:
+
+        form = AddSubjectAssignmentForm()
+    return render(request, 'teacher/add_item.html', {
         'form': form,
         'msg': msg,
         'color': color,
@@ -172,7 +208,7 @@ def AddQp(request):
             form = AddSubjectQpForm()
             msg = "Successfully added subject question paper!"
             color = "text-success"
-            return render(request, 'teacher/add_questionpaper.html', {
+            return render(request, 'teacher/add_item.html', {
                 'form': form,
                 'msg': msg,
                 'color': color
@@ -180,7 +216,7 @@ def AddQp(request):
     else:
 
         form = AddSubjectQpForm()
-    return render(request, 'teacher/add_questionpaper.html', {
+    return render(request, 'teacher/add_item.html', {
         'form': form,
         'msg': msg,
         'color': color,

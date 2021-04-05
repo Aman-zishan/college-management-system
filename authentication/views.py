@@ -38,8 +38,7 @@ def login_view(request):
                     else:
                         msg = "Wrong staff code!"
                         return render(request, "accounts/login.html", {"form": form, "msg" : msg})
-                else:
-                    pass
+
                 login(request, user)
                 request.user.save()
                 return redirect("/")

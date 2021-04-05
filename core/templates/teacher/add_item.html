@@ -10,25 +10,29 @@
   <div class="col-md-7">
     <div style="padding: 50px" class="card">
   <form  id="upload-form" method="post" enctype="multipart/form-data">
+      {% if msg != "" %}
+          <span class="{{ color }}">{{ msg }}</span>
+      {% endif %}
     {% csrf_token %}
       {{ form.as_p }}
 
 
-      <span class="text-danger">Upload pdf format files</span>
+
 
 
       <div id="progress-box" class="not-visible"></div>
 
-<br>
 
-    <button id="submit-btn" class="btn btn-primary" type="submit">Upload</button>
+
+    <button id="submit-btn" class="btn btn-primary" type="submit">Submit</button>
   </form>
     </div>
     </div>
+<!--
 <div class="col-md-7">
     <div class="card">
       <div class="card-header">
-        <h4 class="card-title">Previous Notices</h4>
+        <h4 class="card-title">Previous {{ name }}</h4>
       </div>
       <div class="card-body">
 
@@ -56,7 +60,7 @@
       </div>
     </div>
   </div>
-
+-->
     </div>
 
 
