@@ -19,15 +19,20 @@ from django.views.generic import ListView
 def index(request):
     students = User.objects.filter(is_student=True)
     subjects = Subject.objects.all()
+    notif = Notification.objects.all()
 
-    context = {'students': students, 'segment': 'index', 'subjects': subjects}
+    n = int(len(Subject.objects.all())/3)
+    print(n)
+
+    context = {'students': students, 'segment': 'index', 'subjects': subjects, }
+    context_student = {'segment': 'index', 'subjects': subjects, 'notif' : notif, }
 
     if request.user.is_teacher:
         html_template = loader.get_template( 'teacher/dashboard.html')
         return HttpResponse(html_template.render(context, request))
     else:
         html_template = loader.get_template( 'student/dashboard.html')
-        return HttpResponse(html_template.render(context, request))
+        return HttpResponse(html_template.render(context_student, request))
 
 '''
 

@@ -17,42 +17,146 @@
                 <h5 class="card-category">Student Dashboard</h5>
                 <h2 class="card-title">Welcome {{ request.user.username }}</h2>
               </div>
-              <div class="col-sm-6">
-                <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
-                  <label class="btn btn-sm btn-primary btn-simple active" id="0">
-                    <input type="radio" name="options" checked>
-                    <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Accounts</span>
-                    <span class="d-block d-sm-none">
-                      <i class="tim-icons icon-single-02"></i>
-                    </span>
-                  </label>
-                  <label class="btn btn-sm btn-primary btn-simple" id="1">
-                    <input type="radio" class="d-none d-sm-none" name="options">
-                    <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Purchases</span>
-                    <span class="d-block d-sm-none">
-                      <i class="tim-icons icon-gift-2"></i>
-                    </span>
-                  </label>
-                  <label class="btn btn-sm btn-primary btn-simple" id="2">
-                    <input type="radio" class="d-none" name="options">
-                    <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Sessions</span>
-                    <span class="d-block d-sm-none">
-                      <i class="tim-icons icon-tap-02"></i>
-                    </span>
-                  </label>
-                </div>
-              </div>
+
             </div>
           </div>
-          <div class="card-body">
-            <div class="chart-area">
-              <canvas id="chartBig1"></canvas>
-            </div>
-          </div>
+
         </div>
       </div>
+      <section class="pt-5 pb-5">
+  <div class="container">
+    <div class="row">
+        <div class="col-6">
+            <h3 class="mb-3">Subjects </h3>
+        </div>
+        <div class="col-6 text-right">
+            <a class="btn btn-primary mb-3 mr-1" href="#carouselExampleIndicators2" role="button" data-slide="prev">
+                <i class="fa fa-arrow-left"></i>
+            </a>
+            <a class="btn btn-primary mb-3 " href="#carouselExampleIndicators2" role="button" data-slide="next">
+                <i class="fa fa-arrow-right"></i>
+            </a>
+        </div>
+        <div class="col-12">
+            <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
 
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="row">
+                            {% for subject in subjects|slice:"0:3" %}
+
+                            <div class="col-md-4 mb-3">
+                                <div class="card">
+                                    <img class="img-fluid" alt="100%x280" src="https://learn.g2.com/hubfs/What_is_Information_Technology.jpg">
+                                    <div class="card-body">
+                                        <h4 class="card-title">{{ subject.name}}</h4>
+
+                                        <div style="padding-left: 5%" class="row">
+                                        <button id="submit-btn" class="btn btn-primary">Notes</button>
+
+                                        <button id="submit-btn" class="btn btn-primary">Question Papers</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="row">
+
+                            {% for subject in subjects|slice:"3:6" %}
+
+                            <div class="col-md-4 mb-3">
+                                <div class="card">
+                                    <img class="img-fluid" alt="100%x280" src="https://learn.g2.com/hubfs/What_is_Information_Technology.jpg">
+                                    <div class="card-body">
+                                        <h4 class="card-title">{{ subject.name}}</h4>
+                                        <div style="padding-left: 5%" class="row">
+                                        <button id="submit-btn" class="btn btn-primary">Notes</button>
+
+                                        <button id="submit-btn" class="btn btn-primary">Question Papers</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            {% endfor %}
+
+
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="row">
+
+                             {% for subject in subjects|slice:"6:9" %}
+
+                            <div class="col-md-4 mb-3">
+                                <div class="card">
+                                    <img class="img-fluid" alt="100%x280" src="https://learn.g2.com/hubfs/What_is_Information_Technology.jpg">
+                                    <div class="card-body">
+                                        <h4 class="card-title">{{ subject.name}}</h4>
+
+                                       <div style="padding-left: 5%" class="row">
+                                        <button id="submit-btn" class="btn btn-primary">Notes</button>
+
+                                        <button id="submit-btn" class="btn btn-primary">Question Papers</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
+</section>
+<div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Notices</h4>
+      </div>
+      <div class="card-body">
+
+        {% for notice in notif %}
+
+
+
+        <div class="alert alert-default alert-with-icon" data-notify="container">
+          <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+            <i class="tim-icons icon-simple-remove"></i>
+          </button>
+
+          <span data-notify="icon" class="tim-icons icon-bell-55"></span>
+      <span style="font-size: 15px;" data-notify="message">{{notice.title}}</span>
+            <a target="_blank" href="{{notice.notification.url}}"><button id="submit-btn" class="btn btn-outline-secondary" type="submit">view</button></a>
+
+
+        </div>
+
+
+
+
+
+          {% endfor %}
+      </div>
+    </div>
+  </div>
+    </div>
+
+
+    {% comment %}
     <div class="row">
       <div class="col-lg-4">
         <div class="card card-chart">
@@ -377,6 +481,7 @@
         </div>
       </div>
     </div>
+    {% endcomment %}
 
 {% endblock content %}
 
