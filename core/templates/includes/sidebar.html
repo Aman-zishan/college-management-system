@@ -59,6 +59,19 @@
               <p>Notifications</p>
             </a>
           </li>
+               <li class="{% if 'notifications' in segment %} active {% endif %}">
+            <a href="{% url 'view_notes' %}">
+              <i class="tim-icons icon-paper"></i>
+              <p>Notes</p>
+            </a>
+          </li>
+               <li class="{% if 'notifications' in segment %} active {% endif %}">
+            <a href="{% url 'view_qps' %}">
+              <i class="tim-icons icon-paper"></i>
+              <p>Question papers</p>
+            </a>
+          </li>
+
                 {% endif %}
          
           <li>

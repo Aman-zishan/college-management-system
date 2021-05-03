@@ -1,5 +1,6 @@
 from django.db import models
 from authentication.models import User
+import datetime
 
 
 class Subject(models.Model):
@@ -55,6 +56,8 @@ class Assignment(models.Model):
     title = models.CharField(max_length=500)
     assignment = models.FileField(upload_to='assignments/')
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='subject_assignment')
+    date_of_submission = models.DateTimeField(default=datetime.date.today())
+
 
     def __str__(self):
         return self.title

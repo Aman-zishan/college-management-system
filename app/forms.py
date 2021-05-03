@@ -74,7 +74,7 @@ class AddSubjectAssignmentForm(forms.ModelForm):
     title = forms.CharField(
         widget=forms.TextInput(
             attrs={
-                "placeholder": "assignment Title",
+                "placeholder": "Assignment Title",
                 "class": "form-control"
             }
         ))
@@ -95,10 +95,16 @@ class AddSubjectAssignmentForm(forms.ModelForm):
             attrs={
                    'class': 'form-control'}
         ))
+    date_of_submission = forms.DateField(
+        widget=forms.DateInput(
+            attrs={
+                'class': 'form-control'}
+        ))
+
 
     class Meta:
         model = Assignment
-        fields = ('title', 'subject', 'assignment')
+        fields = ('title', 'subject', 'assignment', 'date_of_submission')
 
 class AddSubjectQpForm(forms.ModelForm):
 

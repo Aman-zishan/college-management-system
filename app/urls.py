@@ -14,10 +14,13 @@ urlpatterns = [
     path('', views.index, name='home'),
     path(r'add_notification', views.UploadNotification, name='add_notification'),
     path(r'view_notification', views.ViewNotification, name='view_notification'),
+    path(r'view_notes', views.ViewNotes, name='view_notes'),
+    path(r'view_qps', views.ViewQps, name='view_qps'),
     path(r'add_subject', views.AddSubject, name='add_subject'),
     path(r'add_note', views.AddNotes, name='add_note'),
     path(r'add_qp', views.AddQp, name='add_qp'),
     path(r'add_assignment', views.AddAssignment, name='add_assignment'),
+
 
     # Matches any html file
    #re_path(r'^.*\.*', views.pages, name='pages'),

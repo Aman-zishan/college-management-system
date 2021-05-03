@@ -1,8 +1,3 @@
-# -*- encoding: utf-8 -*-
-"""
-Copyright (c) 2019 - present AppSeed.us
-"""
-
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template import loader
@@ -11,21 +6,29 @@ from django import template
 from .decorators import teacher_required
 from authentication.models import User
 from .forms import UploadNotificationForm, AddSubjectForm, AddSubjectNotesForm, AddSubjectQpForm, AddSubjectAssignmentForm
-from .models import Notification, Subject, Notes
-
+from .models import Notification, Subject, Notes, QuestionPaper
 from django.views.generic import ListView
+
 
 @login_required(login_url="/login/")
 def index(request):
     students = User.objects.filter(is_student=True)
     subjects = Subject.objects.all()
     notif = Notification.objects.all()
+    notes = Notes.objects.all()
+    qps = QuestionPaper.objects.all()
 
     n = int(len(Subject.objects.all())/3)
     print(n)
 
     context = {'students': students, 'segment': 'index', 'subjects': subjects, }
-    context_student = {'segment': 'index', 'subjects': subjects, 'notif' : notif, }
+    context_student = {
+        'segment': 'index',
+        'subjects': subjects,
+        'notif': notif,
+        'notes': notes,
+        'qps': qps
+    }
 
     if request.user.is_teacher:
         html_template = loader.get_template( 'teacher/dashboard.html')
@@ -192,6 +195,31 @@ def ViewNotification(request):
     return render(request, 'student/view_notifications.html', {
 
                 'notif': notification,
+            })
+
+
+@login_required(login_url="/login/")
+def ViewNotes(request):
+
+    notes = Notes.objects.all()
+    subjects = Subject.objects.all()
+
+    return render(request, 'student/view_notes.html', {
+
+                'notes': notes,
+                'subjects': subjects
+            })
+
+@login_required(login_url="/login/")
+def ViewQps(request):
+
+    qps = QuestionPaper.objects.all()
+    subjects = Subject.objects.all()
+
+    return render(request, 'student/view_qp.html', {
+
+                'qps': qps,
+                'subjects': subjects
             })
 
 

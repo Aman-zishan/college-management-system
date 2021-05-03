@@ -1,4 +1,5 @@
 {% extends "layouts/base.html" %}
+{% load custom_tags %}
 
 {% block title %} Dashboard {% endblock %} 
 
@@ -52,9 +53,10 @@
                                         <h4 class="card-title">{{ subject.name}}</h4>
 
                                         <div style="padding-left: 5%" class="row">
-                                        <button id="submit-btn" class="btn btn-primary">Notes</button>
+                                            {% for note in notes|sub_notes:subject.id %}
+                                                <a href="{{ note.note.url }}">  <button id="submit-btn" class="btn btn-primary">{{ note.title }}</button> </a>
+                                        {% endfor %}
 
-                                        <button id="submit-btn" class="btn btn-primary">Question Papers</button>
                                         </div>
                                     </div>
 
@@ -76,9 +78,9 @@
                                     <div class="card-body">
                                         <h4 class="card-title">{{ subject.name}}</h4>
                                         <div style="padding-left: 5%" class="row">
-                                        <button id="submit-btn" class="btn btn-primary">Notes</button>
-
-                                        <button id="submit-btn" class="btn btn-primary">Question Papers</button>
+                                        {% for note in notes|sub_notes:subject.id %}
+                                                <a href="{{ note.note.url }}">  <button id="submit-btn" class="btn btn-primary">{{ note.title }}</button> </a>
+                                        {% endfor %}
                                         </div>
                                     </div>
 
@@ -103,9 +105,9 @@
                                         <h4 class="card-title">{{ subject.name}}</h4>
 
                                        <div style="padding-left: 5%" class="row">
-                                        <button id="submit-btn" class="btn btn-primary">Notes</button>
-
-                                        <button id="submit-btn" class="btn btn-primary">Question Papers</button>
+                                        {% for note in notes|sub_notes:subject.id %}
+                                                <a href="{{ note.note.url }}">  <button id="submit-btn" class="btn btn-primary">{{ note.title }}</button> </a>
+                                        {% endfor %}
                                         </div>
                                     </div>
 
