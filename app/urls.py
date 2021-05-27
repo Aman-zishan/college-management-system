@@ -16,6 +16,7 @@ urlpatterns = [
     path(r'view_notification', views.ViewNotification, name='view_notification'),
     path(r'view_notes', views.ViewNotes, name='view_notes'),
     path(r'view_qps', views.ViewQps, name='view_qps'),
+    path(r'view_assignments', views.ViewAssignment, name='view_assignments'),
     path(r'add_subject', views.AddSubject, name='add_subject'),
     path(r'add_note', views.AddNotes, name='add_note'),
     path(r'add_qp', views.AddQp, name='add_qp'),

@@ -1,0 +1,185 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block title %} Dashboard {% endblock %}
+{% load custom_tags %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    {%comment%}
+<div class="row">
+
+<div class="col-md-7">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Notes</h4>
+      </div>
+      <div class="card-body">
+
+        {% for note in notes %}
+
+
+
+        <div class="alert alert-default alert-with-icon" data-notify="container">
+          <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+            <i class="tim-icons icon-simple-remove"></i>
+          </button>
+
+          <span data-notify="icon" class="tim-icons icon-bell-55"></span>
+      <span style="font-size: 15px;" data-notify="message">{{note.title}}</span>
+            <a target="_blank" href="{{note.note.url}}"><button id="submit-btn" class="btn btn-outline-secondary" type="submit">view</button></a>
+
+
+        </div>
+
+
+
+
+
+          {% endfor %}
+      </div>
+    </div>
+  </div>
+
+    </div>
+    {%endcomment%}
+
+    <br>
+
+    <table class="table table-hover table-dark">
+  <thead>
+    <tr>
+
+      <th scope="col">Subject</th>
+      <th scope="col">Assignment</th>
+
+
+
+    </tr>
+  </thead>
+  <tbody>
+  {% for subject in subjects %}
+    <tr>
+
+      <td>{{ subject.name }}</td>
+      <td>{% for assignment in assignments|sub_assignment:subject.id %}
+
+         {{ forloop.counter }}. <a href="{{ assignment.assignment.url }}">{{ assignment.title }}</a>
+          <h5>Due date: {{ assignment.date_of_submission }}</h5>
+
+
+          {% empty %}
+          <h6>No Assignments available</h6>
+
+
+      {% endfor %}</td>
+
+
+    </tr>
+  {% endfor %}
+
+  </tbody>
+</table>
+
+
+
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+  <script>
+ if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+
+   window.onload = function() {
+
+           console.log("oi")
+           // Javascript method's body can be found in assets/js/demos.js
+           //demo.initDashboardPageCharts();
+
+           console.log('hello world')
+           const uploadForm = document.getElementById('upload-form')
+           const input = document.getElementById('id_notification')
+
+
+           console.log(input)
+
+
+           const alertBox = document.getElementById('alert-box')
+           const imageBox = document.getElementById('image-box')
+           const progressBox = document.getElementById('progress-box')
+
+
+
+           const csrf = document.getElementsByName('csrfmiddlewaretoken')
+
+           input.addEventListener('change', () => {
+               progressBox.classList.remove('not-visible')
+
+
+               const img_data = input.files[0]
+               const url = URL.createObjectURL(img_data)
+               console.log(img_data)
+
+               const fd = new FormData()
+               fd.append('csrfmiddlewaretoken', csrf[0].value)
+               fd.append('image', img_data)
+
+               $.ajax({
+                   type: 'POST',
+                   url: uploadForm.action,
+                   enctype: 'multipart/form-data',
+                   data: fd,
+                   beforeSend: function () {
+                       console.log('before')
+
+                   },
+                   xhr: function () {
+                       const xhr = new window.XMLHttpRequest();
+                       xhr.upload.addEventListener('progress', e => {
+                           // console.log(e)
+                           if (e.lengthComputable) {
+                               const percent = e.loaded / e.total * 100
+                               console.log(percent)
+                               progressBox.innerHTML = `<div class="progress">
+                                                <div class="progress-bar" role="progressbar" style="width: ${percent}%" aria-valuenow="${percent}" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <p>${percent.toFixed(1)}%</p>`
+                           }
+
+                       })
+
+                       return xhr
+                   },
+                   success: function (response) {
+                       console.log(response)
+
+
+
+
+
+
+                   },
+                   error: function (error) {
+                       console.log(error)
+
+                   },
+                   cache: false,
+                   contentType: false,
+                   processData: false,
+               });
+           });
+   }
+  </script>
+
+{% endblock javascripts %}
+
+
+
+

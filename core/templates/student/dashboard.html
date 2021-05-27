@@ -30,47 +30,14 @@
         <div class="col-6">
             <h3 class="mb-3">Subjects </h3>
         </div>
-        <div class="col-6 text-right">
-            <a class="btn btn-primary mb-3 mr-1" href="#carouselExampleIndicators2" role="button" data-slide="prev">
-                <i class="fa fa-arrow-left"></i>
-            </a>
-            <a class="btn btn-primary mb-3 " href="#carouselExampleIndicators2" role="button" data-slide="next">
-                <i class="fa fa-arrow-right"></i>
-            </a>
-        </div>
+
         <div class="col-12">
             <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
 
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <div class="row">
-                            {% for subject in subjects|slice:"0:3" %}
-
-                            <div class="col-md-4 mb-3">
-                                <div class="card">
-                                    <img class="img-fluid" alt="100%x280" src="https://learn.g2.com/hubfs/What_is_Information_Technology.jpg">
-                                    <div class="card-body">
-                                        <h4 class="card-title">{{ subject.name}}</h4>
-
-                                        <div style="padding-left: 5%" class="row">
-                                            {% for note in notes|sub_notes:subject.id %}
-                                                <a href="{{ note.note.url }}">  <button id="submit-btn" class="btn btn-primary">{{ note.title }}</button> </a>
-                                        {% endfor %}
-
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-
-                            {% endfor %}
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="row">
-
-                            {% for subject in subjects|slice:"3:6" %}
+                            {% for subject in subjects %}
 
                             <div class="col-md-4 mb-3">
                                 <div class="card">
@@ -78,36 +45,32 @@
                                     <div class="card-body">
                                         <h4 class="card-title">{{ subject.name}}</h4>
                                         <div style="padding-left: 5%" class="row">
-                                        {% for note in notes|sub_notes:subject.id %}
+                                        <h4>Latest Notes:</h4>
+                                            {% for note in notes|sub_notes:subject.id|slice:"0:3" %}
                                                 <a href="{{ note.note.url }}">  <button id="submit-btn" class="btn btn-primary">{{ note.title }}</button> </a>
+                                                {%  empty %}
+                                                <br><h4 class="text-danger" style="margin-left: 2px">No Notes Available</h4>
                                         {% endfor %}
+
+                                        </div><br>
+                                        <div style="padding-left: 5%" class="row">
+                                        <h4>Latest Previous Question Papers:</h4>
+                                            {% for qp in qps|sub_qp:subject.id|slice:"0:3" %}
+                                                <a href="{{ qp.qp.url }}">  <button id="submit-btn" class="btn btn-primary">{{ qp.title }}</button> </a>
+                                                {%  empty %}
+                                                <br><h4 class="text-danger" style="margin-left: 2px">No QPs Available</h4>
+                                        {% endfor %}
+
                                         </div>
-                                    </div>
 
-                                </div>
-                            </div>
-
-
-                            {% endfor %}
-
-
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="row">
-
-                             {% for subject in subjects|slice:"6:9" %}
-
-                            <div class="col-md-4 mb-3">
-                                <div class="card">
-                                    <img class="img-fluid" alt="100%x280" src="https://learn.g2.com/hubfs/What_is_Information_Technology.jpg">
-                                    <div class="card-body">
-                                        <h4 class="card-title">{{ subject.name}}</h4>
-
-                                       <div style="padding-left: 5%" class="row">
-                                        {% for note in notes|sub_notes:subject.id %}
-                                                <a href="{{ note.note.url }}">  <button id="submit-btn" class="btn btn-primary">{{ note.title }}</button> </a>
+                                         <div style="padding-left: 5%" class="row">
+                                        <h4>Latest Assignments:</h4>
+                                            {% for assignment in assignments|sub_assignment:subject.id|slice:"0:3" %}
+                                                <a href="{{ assignment.assignment.url }}">  <button id="submit-btn" class="btn btn-primary">{{ assignment.title }}</button> </a>
+                                                {%  empty %}
+                                                <br><h4 class="text-danger" style="margin-left: 2px">No Assignments Available</h4>
                                         {% endfor %}
+
                                         </div>
                                     </div>
 
@@ -118,6 +81,7 @@
                             {% endfor %}
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

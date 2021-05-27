@@ -13,6 +13,7 @@ from django.http import HttpResponse
 from .forms import LoginForm, SignUpForm
 
 
+
 def login_view(request):
     form = LoginForm(request.POST or None)
     code = "staff@soecusat"
@@ -33,9 +34,11 @@ def login_view(request):
                         login(request, user)
                         return redirect("/")
                     elif staff_code == "":
+                        logout(request)
                         msg = "Please enter the staff code!"
                         return render(request, "accounts/login.html", {"form": form, "msg" : msg})
                     else:
+                        logout(request)
                         msg = "Wrong staff code!"
                         return render(request, "accounts/login.html", {"form": form, "msg" : msg})
 

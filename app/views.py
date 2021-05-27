@@ -6,7 +6,7 @@ from django import template
 from .decorators import teacher_required
 from authentication.models import User
 from .forms import UploadNotificationForm, AddSubjectForm, AddSubjectNotesForm, AddSubjectQpForm, AddSubjectAssignmentForm
-from .models import Notification, Subject, Notes, QuestionPaper
+from .models import Notification, Subject, Notes, QuestionPaper, Assignment
 from django.views.generic import ListView
 
 
@@ -17,22 +17,33 @@ def index(request):
     notif = Notification.objects.all()
     notes = Notes.objects.all()
     qps = QuestionPaper.objects.all()
+    assignments = Assignment.objects.all()
 
     n = int(len(Subject.objects.all())/3)
     print(n)
 
-    context = {'students': students, 'segment': 'index', 'subjects': subjects, }
+
     context_student = {
         'segment': 'index',
         'subjects': subjects,
         'notif': notif,
         'notes': notes,
-        'qps': qps
+        'qps': qps,
+        'assignments': assignments
+    }
+    context_teacher = {
+        'students': students,
+        'segment': 'index',
+        'subjects': subjects,
+        'notif': notif,
+        'notes': notes,
+        'qps': qps,
+        'assignments': assignments
     }
 
     if request.user.is_teacher:
         html_template = loader.get_template( 'teacher/dashboard.html')
-        return HttpResponse(html_template.render(context, request))
+        return HttpResponse(html_template.render(context_teacher, request))
     else:
         html_template = loader.get_template( 'student/dashboard.html')
         return HttpResponse(html_template.render(context_student, request))
@@ -186,6 +197,17 @@ def AddAssignment(request):
         'color': color,
     })
 
+@login_required(login_url="/login/")
+def ViewAssignment(request):
+
+    assignments = Assignment.objects.all()
+    subjects = Subject.objects.all()
+
+    return render(request, 'student/view_assignments.html', {
+
+                'assignments': assignments,
+                'subjects': subjects
+            })
 
 @login_required(login_url="/login/")
 def ViewNotification(request):
@@ -221,6 +243,7 @@ def ViewQps(request):
                 'qps': qps,
                 'subjects': subjects
             })
+
 
 
 @login_required(login_url="/login/")
