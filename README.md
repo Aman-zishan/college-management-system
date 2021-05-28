@@ -75,8 +75,7 @@
    ```
 6. **:dart: setup database and run server**
     ```shell
-   #make sure to delete all files excluding _init__.py
-   before migration to avoid operation errors.
+   #make sure to delete all files excluding __init__.py before migration to avoid operation errors.
 
     
    $python manage.py makemigrations
