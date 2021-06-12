@@ -83,12 +83,10 @@
    $python manage.py runserver
 
    ```
- # Demo
-   <p align="center">
- <img src="images/demo.png" />
- <img src="images/demo2.png" />
- <img src="images/demo3.png" />
- </p>
+ # ER diagram
+ 
+ ![ER diagram](https://user-images.githubusercontent.com/55238388/121786670-14150700-cbdf-11eb-8853-1c2a739082dd.png)
+
 
 
 
