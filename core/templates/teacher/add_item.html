@@ -9,7 +9,8 @@
 <div class="row">
   <div class="col-md-7">
     <div style="padding: 50px" class="card">
-  <form  id="upload-form" method="post" enctype="multipart/form-data">
+  <form
+          id="upload-form" method="post" enctype="multipart/form-data">
       {% if msg != "" %}
           <span class="{{ color }}">{{ msg }}</span>
       {% endif %}
@@ -80,7 +81,7 @@
         window.history.replaceState( null, null, window.location.href );
     }
 
-   window.onload = function() {
+   window.onload = progress = function() {
 
            console.log("oi")
            // Javascript method's body can be found in assets/js/demos.js
